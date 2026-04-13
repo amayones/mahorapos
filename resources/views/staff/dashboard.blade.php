@@ -1,7 +1,23 @@
 <x-layouts.app>
-    <x-page-header title="Dasbor" subtitle="Ringkasan inventaris hari ini" />
+    <div class="mb-8">
+        <h1 class="text-xl font-bold text-slate-900">Dasbor</h1>
+        <p class="text-sm text-slate-500 mt-0.5">Ringkasan inventaris hari ini</p>
+    </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+        <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-9 h-9 rounded-xl bg-violet-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                    </svg>
+                </div>
+                <span class="text-xs text-violet-600 bg-violet-50 px-2 py-0.5 rounded-full font-medium">Total</span>
+            </div>
+            <p class="text-3xl font-bold text-slate-900">{{ $stats['total'] }}</p>
+            <p class="text-sm text-slate-500 mt-1">Total produk</p>
+        </div>
+
         <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
             <div class="flex items-center justify-between mb-4">
                 <div class="w-9 h-9 rounded-xl bg-amber-50 flex items-center justify-center">
@@ -11,8 +27,21 @@
                 </div>
                 <span class="text-xs text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full font-medium">Peringatan</span>
             </div>
-            <p class="text-3xl font-bold {{ $lowStock > 0 ? 'text-red-500' : 'text-emerald-600' }}">{{ $lowStock }}</p>
-            <p class="text-sm text-slate-500 mt-1">Produk stok menipis (di bawah 10)</p>
+            <p class="text-3xl font-bold {{ $stats['low_stock'] > 0 ? 'text-amber-500' : 'text-emerald-600' }}">{{ $stats['low_stock'] }}</p>
+            <p class="text-sm text-slate-500 mt-1">Stok menipis (di bawah 10)</p>
+        </div>
+
+        <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <div class="w-9 h-9 rounded-xl bg-red-50 flex items-center justify-center">
+                    <svg class="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>
+                    </svg>
+                </div>
+                <span class="text-xs text-red-600 bg-red-50 px-2 py-0.5 rounded-full font-medium">Habis</span>
+            </div>
+            <p class="text-3xl font-bold {{ $stats['out_of_stock'] > 0 ? 'text-red-500' : 'text-emerald-600' }}">{{ $stats['out_of_stock'] }}</p>
+            <p class="text-sm text-slate-500 mt-1">Stok habis</p>
         </div>
     </div>
 

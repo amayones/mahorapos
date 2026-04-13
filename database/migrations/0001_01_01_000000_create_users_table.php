@@ -15,7 +15,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'owner', 'cashier', 'staff'])->default('cashier');
-            $table->foreignId('shop_id')->nullable()->constrained()->nullOnDelete();
+            $table->unsignedBigInteger('shop_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

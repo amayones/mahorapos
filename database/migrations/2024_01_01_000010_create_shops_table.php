@@ -16,10 +16,18 @@ return new class extends Migration
             $table->date('subscription_end_date')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('shop_id')->references('id')->on('shops')->nullOnDelete();
+        });
     }
 
     public function down(): void
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign(['shop_id']);
+        });
+
         Schema::dropIfExists('shops');
     }
 };

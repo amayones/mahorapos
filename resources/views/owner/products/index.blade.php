@@ -1,5 +1,23 @@
 <x-layouts.app>
-    <x-page-header title="Produk" subtitle="Kelola katalog produk Anda" action-label="Tambah Produk" />
+    <div class="flex items-start justify-between mb-6">
+        <div>
+            <h1 class="text-xl font-bold text-slate-900">Produk</h1>
+            <p class="text-sm text-slate-500 mt-0.5">Kelola katalog produk toko Anda</p>
+        </div>
+        <button onclick="document.getElementById('modal-add-product').classList.remove('hidden')"
+            class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-semibold rounded-lg hover:bg-indigo-700 transition-colors shadow-sm">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+            Tambah Produk
+        </button>
+    </div>
+
+    @if(session('success'))
+    <div class="mb-4 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-xl">
+        {{ session('success') }}
+    </div>
+    @endif
 
     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -24,7 +42,7 @@
                     <tr class="hover:bg-slate-50/50 transition-colors">
                         <td class="px-6 py-4 text-slate-400 text-xs">{{ $loop->iteration }}</td>
                         <td class="px-6 py-4 font-medium text-slate-900">{{ $product->name }}</td>
-                        <td class="px-6 py-4 text-slate-700 font-medium">Rp {{ number_format($product->price, 2) }}</td>
+                        <td class="px-6 py-4 text-slate-700 font-medium">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
                         <td class="px-6 py-4">
                             @if($product->stock === 0)
                                 <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-600">Stok habis</span>
@@ -36,8 +54,13 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                <button class="text-xs text-indigo-500 hover:text-indigo-700 font-medium transition-colors">Edit</button>
-                                <button class="text-xs text-red-400 hover:text-red-600 font-medium transition-colors">Hapus</button>
+                                <a href="{{ route('owner.products.edit', $product) }}"
+                                   class="text-xs text-indigo-500 hover:text-indigo-700 font-medium transition-colors">Edit</a>
+                                <form method="POST" action="{{ route('owner.products.destroy', $product) }}"
+                                      onsubmit="return confirm('Hapus produk ini?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="text-xs text-red-400 hover:text-red-600 font-medium transition-colors">Hapus</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -50,6 +73,52 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    {{-- Modal Tambah Produk --}}
+    <div id="modal-add-product" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-base font-bold text-slate-900">Tambah Produk</h3>
+                <button onclick="document.getElementById('modal-add-product').classList.add('hidden')"
+                    class="text-slate-400 hover:text-slate-600">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                </button>
+            </div>
+            <form method="POST" action="{{ route('owner.products.store') }}" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Nama Produk</label>
+                    <input type="text" name="name" required
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        placeholder="Contoh: Kopi Susu">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Harga (Rp)</label>
+                    <input type="number" name="price" min="0" required
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        placeholder="15000">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-slate-700 mb-1.5">Stok</label>
+                    <input type="number" name="stock" min="0" required
+                        class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        placeholder="100">
+                </div>
+                <div class="flex gap-3 pt-1">
+                    <button type="button" onclick="document.getElementById('modal-add-product').classList.add('hidden')"
+                        class="flex-1 py-2.5 border border-slate-200 text-slate-600 text-sm font-medium rounded-xl hover:bg-slate-50 transition-colors">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="flex-1 py-2.5 bg-indigo-600 text-white text-sm font-semibold rounded-xl hover:bg-indigo-700 transition-colors">
+                        Simpan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </x-layouts.app>

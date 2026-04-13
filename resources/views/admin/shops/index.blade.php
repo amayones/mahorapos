@@ -1,11 +1,20 @@
 <x-layouts.app>
-    <x-page-header title="Toko" subtitle="Semua toko terdaftar di MahoraPOS" />
+    <div class="mb-6">
+        <h1 class="text-xl font-bold text-slate-900">Toko</h1>
+        <p class="text-sm text-slate-500 mt-0.5">Semua toko terdaftar di MahoraPOS</p>
+    </div>
+
+    @if(session('success'))
+    <div class="mb-4 px-4 py-3 bg-emerald-50 border border-emerald-200 text-emerald-700 text-sm rounded-xl">
+        {{ session('success') }}
+    </div>
+    @endif
 
     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
         <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
             <h2 class="text-sm font-semibold text-slate-700">Semua Toko</h2>
             <span class="text-xs text-slate-400 bg-slate-50 border border-slate-100 px-2 py-0.5 rounded-full">
-                {{ $shops->count() }} registered
+                {{ $shops->count() }} terdaftar
             </span>
         </div>
         <div class="overflow-x-auto">
@@ -46,8 +55,26 @@
                         </td>
                         <td class="px-6 py-4">
                             <div class="flex items-center gap-3">
-                                <button class="text-xs text-indigo-500 hover:text-indigo-700 font-medium transition-colors">Aktifkan</button>
-                                <button class="text-xs text-red-400 hover:text-red-600 font-medium transition-colors">Tangguhkan</button>
+                                @if($shop->subscription_status !== 'active')
+                                <form method="POST" action="{{ route('admin.shops.activate', $shop) }}">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="text-xs text-emerald-500 hover:text-emerald-700 font-medium transition-colors">Aktifkan</button>
+                                </form>
+                                @endif
+
+                                @if($shop->subscription_status !== 'suspended')
+                                <form method="POST" action="{{ route('admin.shops.suspend', $shop) }}"
+                                      onsubmit="return confirm('Tangguhkan toko ini?')">
+                                    @csrf @method('PATCH')
+                                    <button type="submit" class="text-xs text-amber-500 hover:text-amber-700 font-medium transition-colors">Tangguhkan</button>
+                                </form>
+                                @endif
+
+                                <form method="POST" action="{{ route('admin.shops.destroy', $shop) }}"
+                                      onsubmit="return confirm('Hapus toko ini beserta semua datanya?')">
+                                    @csrf @method('DELETE')
+                                    <button type="submit" class="text-xs text-red-400 hover:text-red-600 font-medium transition-colors">Hapus</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

@@ -22,11 +22,14 @@
             @include('components.sidebar-link', ['route' => 'owner.dashboard', 'label' => 'Dasbor',    'icon' => 'home'])
             @include('components.sidebar-link', ['route' => 'owner.users',     'label' => 'Pengguna',  'icon' => 'users'])
             @include('components.sidebar-link', ['route' => 'owner.products',  'label' => 'Produk',    'icon' => 'box'])
+            @include('components.sidebar-link', ['route' => 'owner.coupons',   'label' => 'Kupon',     'icon' => 'tag'])
             @include('components.sidebar-link', ['route' => 'owner.reports',   'label' => 'Laporan',   'icon' => 'chart'])
 
         @elseif($role === 'cashier')
-            @include('components.sidebar-link', ['route' => 'cashier.dashboard', 'label' => 'Dasbor', 'icon' => 'home'])
-            @include('components.sidebar-link', ['route' => 'cashier.pos',       'label' => 'POS',    'icon' => 'cart'])
+            @include('components.sidebar-link', ['route' => 'cashier.dashboard', 'label' => 'Dasbor',  'icon' => 'home'])
+            @include('components.sidebar-link', ['route' => 'cashier.pos',       'label' => 'POS',     'icon' => 'cart'])
+            @include('components.sidebar-link', ['route' => 'cashier.history',   'label' => 'Riwayat', 'icon' => 'clipboard'])
+            @include('components.sidebar-link', ['route' => 'cashier.shift',     'label' => 'Shift',   'icon' => 'clock'])
 
         @elseif($role === 'staff')
             @include('components.sidebar-link', ['route' => 'staff.dashboard',  'label' => 'Dasbor',    'icon' => 'home'])
