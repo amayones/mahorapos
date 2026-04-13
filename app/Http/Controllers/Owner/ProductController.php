@@ -20,7 +20,12 @@ class ProductController extends Controller
             'name'  => 'required|string|max:100',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('products', 'public');
+        }
 
         Product::create(array_merge($data, ['shop_id' => auth()->user()->shop_id]));
 
@@ -41,7 +46,13 @@ class ProductController extends Controller
             'name'  => 'required|string|max:100',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
+            'image' => 'nullable|image|max:2048',
         ]);
+
+        if ($request->hasFile('image')) {
+            if ($product->image) \Storage::disk('public')->delete($product->image);
+            $data['image'] = $request->file('image')->store('products', 'public');
+        }
 
         $product->update($data);
 
@@ -51,6 +62,7 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         abort_if($product->shop_id !== auth()->user()->shop_id, 403);
+        if ($product->image) \Storage::disk('public')->delete($product->image);
         $product->delete();
         return redirect()->route('owner.products')->with('success', 'Produk berhasil dihapus.');
     }

@@ -17,8 +17,14 @@ class PosController extends Controller
     public function index()
     {
         $user     = auth()->user();
-        $products = Product::where('shop_id', $user->shop_id)->where('stock', '>', 0)->get();
         $shift    = CashierShift::where('cashier_id', $user->id)->whereNull('closed_at')->latest('opened_at')->first();
+
+        if (!$shift) {
+            return redirect()->route('cashier.shift')
+                ->with('warning', 'Anda harus membuka shift terlebih dahulu sebelum mengakses POS.');
+        }
+
+        $products = Product::where('shop_id', $user->shop_id)->where('stock', '>', 0)->get();
 
         return view('cashier.pos.index', compact('products', 'shift'));
     }
