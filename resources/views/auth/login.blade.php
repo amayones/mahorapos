@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login — MahoraPOS</title>
+    <title>Masuk — MahoraPOS</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-full bg-slate-50 antialiased">
@@ -29,13 +29,13 @@
             {{-- Center content --}}
             <div class="relative z-10">
                 <h2 class="text-3xl font-bold text-white mb-4 leading-snug">
-                    Manage your business<br>with confidence
+                    Kelola bisnis Anda<br>dengan percaya diri
                 </h2>
                 <p class="text-slate-400 text-sm leading-relaxed mb-8">
-                    A complete POS solution for cafes, shops, and restaurants. Fast, simple, and built for your team.
+                    Solusi POS lengkap untuk kafe, toko, dan restoran. Cepat, sederhana, dan dirancang untuk tim Anda.
                 </p>
                 <div class="space-y-3">
-                    @foreach(['Role-based access control', 'Multi-tenant shop isolation', 'Real-time inventory tracking'] as $feat)
+                    @foreach(['Kontrol akses berbasis peran', 'Isolasi toko multi-tenant', 'Pelacakan inventaris real-time'] as $feat)
                     <div class="flex items-center gap-3">
                         <div class="w-5 h-5 rounded-full bg-indigo-500/20 flex items-center justify-center shrink-0">
                             <svg class="w-3 h-3 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,8 +67,8 @@
                 </div>
 
                 <div class="mb-8">
-                    <h1 class="text-2xl font-bold text-slate-900">Welcome back</h1>
-                    <p class="text-slate-500 text-sm mt-1">Sign in to your account to continue</p>
+                    <h1 class="text-2xl font-bold text-slate-900">Selamat datang kembali</h1>
+                    <p class="text-slate-500 text-sm mt-1">Masuk ke akun Anda untuk melanjutkan</p>
                 </div>
 
                 @if($errors->any())
@@ -84,7 +84,7 @@
                     @csrf
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
+                        <label class="block text-sm font-medium text-slate-700 mb-1.5">Alamat Email</label>
                         <input type="email" name="email" value="{{ old('email') }}" required autocomplete="email"
                             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow"
                             placeholder="you@example.com">
@@ -92,7 +92,7 @@
 
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
-                            <label class="block text-sm font-medium text-slate-700">Password</label>
+                            <label class="block text-sm font-medium text-slate-700">Kata Sandi</label>
                         </div>
                         <input type="password" name="password" required autocomplete="current-password"
                             class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 bg-white text-sm text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-shadow"
@@ -102,28 +102,28 @@
                     <div class="flex items-center gap-2">
                         <input type="checkbox" name="remember" id="remember"
                             class="w-4 h-4 text-indigo-600 rounded border-slate-300 focus:ring-indigo-500">
-                        <label for="remember" class="text-sm text-slate-600">Remember me for 30 days</label>
+                        <label for="remember" class="text-sm text-slate-600">Ingat saya selama 30 hari</label>
                     </div>
 
                     <button type="submit"
                         class="w-full py-2.5 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 active:bg-indigo-800 transition-colors text-sm shadow-sm shadow-indigo-200 mt-2">
-                        Sign In
+                        Masuk
                     </button>
                 </form>
 
                 <p class="text-center text-sm text-slate-500 mt-6">
-                    Don't have an account?
-                    <a href="{{ route('register') }}" class="text-indigo-600 font-semibold hover:underline">Create one free</a>
+                    Belum punya akun?
+                    <a href="{{ route('register') }}" class="text-indigo-600 font-semibold hover:underline">Daftar gratis</a>
                 </p>
 
                 {{-- Demo credentials --}}
                 <div class="mt-6 p-4 bg-slate-50 border border-slate-200 rounded-xl">
-                    <p class="text-xs font-semibold text-slate-600 mb-2.5">Demo accounts (password: <code class="bg-slate-200 px-1 rounded">password</code>)</p>
+                    <p class="text-xs font-semibold text-slate-600 mb-2.5">Akun demo (kata sandi: <code class="bg-slate-200 px-1 rounded">password</code>)</p>
                     <div class="space-y-1.5">
                         @foreach([
-                            ['👑', 'Owner',   'owner@democafe.com'],
-                            ['🛒', 'Cashier', 'cashier@democafe.com'],
-                            ['📋', 'Staff',   'staff@democafe.com'],
+                            ['👑', 'Pemilik',  'owner@democafe.com'],
+                            ['🛒', 'Kasir',   'cashier@democafe.com'],
+                            ['📋', 'Staf',    'staff@democafe.com'],
                             ['🔧', 'Admin',   'admin@mahorapos.com'],
                         ] as [$icon, $role, $email])
                         <div class="flex items-center justify-between text-xs">
@@ -135,7 +135,7 @@
                 </div>
 
                 <p class="text-center text-xs text-slate-400 mt-5">
-                    <a href="/" class="hover:text-indigo-600 transition-colors">← Back to home</a>
+                    <a href="/" class="hover:text-indigo-600 transition-colors">← Kembali ke beranda</a>
                 </p>
             </div>
         </div>

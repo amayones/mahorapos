@@ -19,23 +19,23 @@
     <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
 
         @if($role === 'owner')
-            @include('components.sidebar-link', ['route' => 'owner.dashboard', 'label' => 'Dashboard', 'icon' => 'home'])
-            @include('components.sidebar-link', ['route' => 'owner.users',     'label' => 'Users',     'icon' => 'users'])
-            @include('components.sidebar-link', ['route' => 'owner.products',  'label' => 'Products',  'icon' => 'box'])
-            @include('components.sidebar-link', ['route' => 'owner.reports',   'label' => 'Reports',   'icon' => 'chart'])
+            @include('components.sidebar-link', ['route' => 'owner.dashboard', 'label' => 'Dasbor',    'icon' => 'home'])
+            @include('components.sidebar-link', ['route' => 'owner.users',     'label' => 'Pengguna',  'icon' => 'users'])
+            @include('components.sidebar-link', ['route' => 'owner.products',  'label' => 'Produk',    'icon' => 'box'])
+            @include('components.sidebar-link', ['route' => 'owner.reports',   'label' => 'Laporan',   'icon' => 'chart'])
 
         @elseif($role === 'cashier')
-            @include('components.sidebar-link', ['route' => 'cashier.dashboard', 'label' => 'Dashboard', 'icon' => 'home'])
-            @include('components.sidebar-link', ['route' => 'cashier.pos',       'label' => 'POS',       'icon' => 'cart'])
+            @include('components.sidebar-link', ['route' => 'cashier.dashboard', 'label' => 'Dasbor', 'icon' => 'home'])
+            @include('components.sidebar-link', ['route' => 'cashier.pos',       'label' => 'POS',    'icon' => 'cart'])
 
         @elseif($role === 'staff')
-            @include('components.sidebar-link', ['route' => 'staff.dashboard',  'label' => 'Dashboard', 'icon' => 'home'])
-            @include('components.sidebar-link', ['route' => 'staff.inventory',  'label' => 'Inventory', 'icon' => 'clipboard'])
+            @include('components.sidebar-link', ['route' => 'staff.dashboard',  'label' => 'Dasbor',    'icon' => 'home'])
+            @include('components.sidebar-link', ['route' => 'staff.inventory',  'label' => 'Inventaris','icon' => 'clipboard'])
 
         @elseif($role === 'admin')
-            @include('components.sidebar-link', ['route' => 'admin.dashboard',     'label' => 'Dashboard',     'icon' => 'home'])
-            @include('components.sidebar-link', ['route' => 'admin.shops',         'label' => 'Shops',         'icon' => 'shop'])
-            @include('components.sidebar-link', ['route' => 'admin.subscriptions', 'label' => 'Subscriptions', 'icon' => 'credit'])
+            @include('components.sidebar-link', ['route' => 'admin.dashboard',     'label' => 'Dasbor',       'icon' => 'home'])
+            @include('components.sidebar-link', ['route' => 'admin.shops',         'label' => 'Toko',         'icon' => 'shop'])
+            @include('components.sidebar-link', ['route' => 'admin.subscriptions', 'label' => 'Langganan',    'icon' => 'credit'])
         @endif
 
     </nav>

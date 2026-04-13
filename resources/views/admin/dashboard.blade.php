@@ -1,5 +1,5 @@
 <x-layouts.app>
-    <x-page-header title="Admin Dashboard" subtitle="System-wide overview" />
+    <x-page-header title="Dasbor Admin" subtitle="Ringkasan seluruh sistem" />
 
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
 
@@ -10,7 +10,7 @@
                 </svg>
             </div>
             <p class="text-2xl font-bold text-slate-900">{{ $stats['shops'] }}</p>
-            <p class="text-xs text-slate-400 mt-1">Total Shops</p>
+            <p class="text-xs text-slate-400 mt-1">Total Toko</p>
         </div>
 
         <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
@@ -20,7 +20,7 @@
                 </svg>
             </div>
             <p class="text-2xl font-bold text-slate-900">{{ $stats['users'] }}</p>
-            <p class="text-xs text-slate-400 mt-1">Total Users</p>
+            <p class="text-xs text-slate-400 mt-1">Total Pengguna</p>
         </div>
 
         <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
@@ -30,7 +30,7 @@
                 </svg>
             </div>
             <p class="text-2xl font-bold text-emerald-600">{{ $stats['active'] }}</p>
-            <p class="text-xs text-slate-400 mt-1">Active Shops</p>
+            <p class="text-xs text-slate-400 mt-1">Toko Aktif</p>
         </div>
 
         <div class="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm">
@@ -40,27 +40,27 @@
                 </svg>
             </div>
             <p class="text-2xl font-bold text-red-500">{{ $stats['suspended'] }}</p>
-            <p class="text-xs text-slate-400 mt-1">Suspended Shops</p>
+            <p class="text-xs text-slate-400 mt-1">Toko Ditangguhkan</p>
         </div>
 
     </div>
 
     <div class="bg-white rounded-2xl border border-slate-100 p-6 shadow-sm">
-        <h2 class="text-sm font-semibold text-slate-700 mb-4">Quick Actions</h2>
+        <h2 class="text-sm font-semibold text-slate-700 mb-4">Aksi Cepat</h2>
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('admin.shops') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white text-sm font-medium rounded-lg hover:bg-indigo-700 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                 </svg>
-                Manage Shops
+                Kelola Toko
             </a>
             <a href="{{ route('admin.subscriptions') }}"
                class="inline-flex items-center gap-2 px-4 py-2 bg-violet-600 text-white text-sm font-medium rounded-lg hover:bg-violet-700 transition-colors">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/>
                 </svg>
-                Subscriptions
+                Langganan
             </a>
         </div>
     </div>
