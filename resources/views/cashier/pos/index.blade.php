@@ -319,8 +319,16 @@
 
         function renderChange() {
             const { total } = getAmounts();
-            const paid      = parseFloat(document.getElementById('cash-paid').value) || 0;
-            document.getElementById('change-amount').textContent = fmt(Math.max(0, paid - total));
+
+            let val = document.getElementById('cash-paid').value;
+
+            // paksa jadi number beneran
+            val = val.replace(/\D/g, ''); 
+
+            const paid = parseInt(val) || 0;
+
+            document.getElementById('change-amount').textContent =
+            fmt(Math.max(0, paid - total));
         }
 
         async function applyCoupon() {
@@ -446,7 +454,10 @@
 
         function addCash(amount) {
             const input = document.getElementById('cash-paid');
-            input.value = (parseInt(input.value) || 0) + amount;
+            let current = parseInt(input.value) || 0;
+
+            input.value = current + amount;
+
             renderChange();
         }
     </script>
