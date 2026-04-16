@@ -58,11 +58,11 @@ class DatabaseSeeder extends Seeder
 
         // Demo products
         $products = [
-            ['name' => 'Espresso',       'price' => 5.00,  'stock' => 100],
-            ['name' => 'Latte',          'price' => 7.50,  'stock' => 80],
-            ['name' => 'Croissant',      'price' => 4.50,  'stock' => 30],
-            ['name' => 'Iced Americano', 'price' => 6.00,  'stock' => 5],
-            ['name' => 'Cheesecake',     'price' => 12.00, 'stock' => 0],
+            ['name' => 'Espresso',       'price' => 17000,  'stock' => 100],
+            ['name' => 'Latte',          'price' => 22500,  'stock' => 80],
+            ['name' => 'Croissant',      'price' => 28000,  'stock' => 30],
+            ['name' => 'Iced Americano', 'price' => 18500,  'stock' => 5],
+            ['name' => 'Cheesecake',     'price' => 32000, 'stock' => 12],
         ];
 
         foreach ($products as $p) {

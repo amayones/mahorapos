@@ -55,7 +55,7 @@
                     class="w-full px-3.5 py-2.5 rounded-xl border border-emerald-300 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 bg-white"
                     placeholder="Catatan penutupan shift...">
             </div>
-            <button type="submit" onclick="return confirm('Tutup shift sekarang?')"
+            <button type="button" onclick="openModal()"
                 class="px-5 py-2.5 bg-emerald-600 text-white text-sm font-semibold rounded-xl hover:bg-emerald-700 transition-colors">
                 Tutup Shift
             </button>
@@ -117,4 +117,66 @@
         </div>
     </div>
     @endif
+
+    <div id="modalCloseShift" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div id="modalOverlay" class="absolute inset-0 bg-black/40 opacity-0 transition-opacity duration-200"></div>
+
+    <div id="modalContent"
+        class="relative bg-white rounded-2xl p-6 w-full max-w-sm
+        opacity-0 scale-95 transition-all duration-200">
+        
+        <h3 class="text-lg font-semibold text-slate-900 mb-2">Tutup Shift</h3>
+        <p class="text-sm text-slate-500 mb-5">Yakin mau tutup shift sekarang?</p>
+
+        <div class="flex justify-end gap-2">
+            <button onclick="closeModal()"
+                class="px-4 py-2 text-sm rounded-xl border border-slate-200">
+                Batal
+            </button>
+            <button onclick="submitCloseShift()"
+                class="px-4 py-2 text-sm rounded-xl bg-emerald-600 text-white">
+                Ya, Tutup
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+const modal = document.getElementById('modalCloseShift');
+const overlay = document.getElementById('modalOverlay');
+const content = document.getElementById('modalContent');
+
+function openModal() {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+
+    setTimeout(() => {
+        overlay.classList.remove('opacity-0');
+        content.classList.remove('opacity-0', 'scale-95');
+    }, 10);
+}
+
+function closeModal() {
+    overlay.classList.add('opacity-0');
+    content.classList.add('opacity-0', 'scale-95');
+
+    setTimeout(() => {
+        modal.classList.add('hidden');
+    }, 200);
+}
+
+function submitCloseShift() {
+    document.querySelector('form[action="{{ route('cashier.shift.close') }}"]').submit();
+}
+
+// klik luar
+overlay.addEventListener('click', closeModal);
+
+// esc key
+document.addEventListener('keydown', function(e) {
+    if (e.key === "Escape") {
+        closeModal();
+    }
+});
+</script>
 </x-layouts.app>

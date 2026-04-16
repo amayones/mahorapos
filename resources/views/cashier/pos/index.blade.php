@@ -119,7 +119,7 @@
                 {{-- Payment --}}
                 <div class="px-4 py-3 border-t border-slate-100 space-y-2">
                     <div class="flex gap-1.5">
-                        @foreach(['cash' => 'Tunai', 'ewallet' => 'E-Wallet', 'transfer' => 'Transfer'] as $val => $label)
+                        @foreach(['cash' => 'Tunai', 'ewallet' => 'E-Wallet'] as $val => $label)
                         <button onclick="setPayment('{{ $val }}')" id="pay-{{ $val }}"
                             class="flex-1 py-1.5 text-xs font-medium rounded-lg border transition-colors
                                    {{ $val === 'cash' ? 'bg-indigo-600 text-white border-indigo-600' : 'border-slate-200 text-slate-600 hover:bg-slate-50' }}">
@@ -133,9 +133,19 @@
                             <input type="number" id="cash-paid" min="0" value="0" oninput="renderChange()"
                                 class="flex-1 px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs focus:outline-none focus:ring-2 focus:ring-indigo-400">
                         </div>
+                        
                         <div class="flex justify-between text-xs mt-1.5 px-0.5">
                             <span class="text-slate-500">Kembalian</span>
                             <span id="change-amount" class="font-bold text-emerald-600">Rp 0</span>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-1.5 mt-2">
+                            @foreach([1000,2000,5000,10000,20000,50000,100000] as $val)
+                                <button type="button" onclick="addCash({{ $val }})"
+                                    class="px-2 py-1 text-[10px] rounded-lg border border-slate-200 hover:bg-slate-50">
+                                    {{ number_format($val,0,',','.') }}
+                                </button>
+                            @endforeach
                         </div>
                     </div>
                 </div>
@@ -193,7 +203,7 @@
 
         function addToCart(id, name, price, stock) {
             if (!cart[id]) cart[id] = { name, price, qty: 0, stock, discount: 0 };
-            if (cart[id].qty >= stock) return alert(`Stok "${name}" hanya tersisa ${stock}.`);
+            if (cart[id].qty >= stock) return showAlert(`Stok "${name}" hanya tersisa ${stock}.`);
             cart[id].qty++;
             renderCart();
         }
@@ -212,7 +222,7 @@
 
         function setPayment(method) {
             paymentMethod = method;
-            ['cash','ewallet','transfer'].forEach(m => {
+            ['cash','ewallet'].forEach(m => {
                 const btn = document.getElementById('pay-' + m);
                 btn.className = btn.className
                     .replace('bg-indigo-600 text-white border-indigo-600', '')
@@ -356,12 +366,12 @@
 
         async function checkout() {
             const keys = Object.keys(cart);
-            if (!keys.length) return alert('Keranjang masih kosong!');
+            if (!keys.length) return showAlert('Keranjang masih kosong!');
 
             const { total } = getAmounts();
             const cashPaid  = parseFloat(document.getElementById('cash-paid').value) || total;
 
-            if (paymentMethod === 'cash' && cashPaid < total) return alert('Uang yang diterima kurang dari total!');
+            if (paymentMethod === 'cash' && cashPaid < total) return showAlert('Uang yang diterima kurang dari total!');
 
             const items = keys.map(id => ({ id: parseInt(id), qty: cart[id].qty, discount: cart[id].discount }));
 
@@ -372,12 +382,12 @@
                     body: JSON.stringify({ items, coupon_id: appliedCoupon?.id ?? null, payment_method: paymentMethod, cash_paid: cashPaid }),
                 });
                 const data = await res.json();
-                if (!res.ok) return alert(data.message ?? 'Terjadi kesalahan.');
+                if (!res.ok) return showAlert(data.message ?? 'Terjadi kesalahan.');
 
                 showReceipt(data.transaction, total, cashPaid, Math.max(0, cashPaid - total));
                 clearCart();
             } catch (e) {
-                alert('Gagal terhubung ke server.');
+                showAlert('Gagal terhubung ke server.');
             }
         }
 
@@ -422,5 +432,35 @@
         }
 
         setPayment('cash');
+
+        function showAlert(msg) {
+            document.getElementById('modal-msg').innerText = msg;
+            const modal = document.getElementById('modal-alert');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeAlert() {
+            document.getElementById('modal-alert').classList.add('hidden');
+        }
+
+        function addCash(amount) {
+            const input = document.getElementById('cash-paid');
+            input.value = (parseInt(input.value) || 0) + amount;
+            renderChange();
+        }
     </script>
+
+    <div id="modal-alert" class="fixed inset-0 z-50 hidden items-center justify-center">
+    <div class="absolute inset-0 bg-black/40"></div>
+
+    <div class="relative bg-white rounded-2xl p-5 w-full max-w-xs text-center">
+        <p id="modal-msg" class="text-sm text-slate-700 mb-4"></p>
+
+        <button onclick="closeAlert()"
+            class="px-4 py-2 bg-indigo-600 text-white text-sm rounded-xl">
+            Oke
+        </button>
+    </div>
+</div>
 </x-layouts.app>
